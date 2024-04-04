@@ -17,6 +17,8 @@ import Layout from "./components/layout.tsx";
 import Errorpage from "./components/Errorpage.tsx";
 import Profile from "./pages/Profile.tsx";
 import ProjectDetail from "./pages/ProjectDetail.tsx";
+import { ThemeProvider } from "./components/themeProvider.tsx";
+import Practice from "./components/practice.tsx";
 
 const queryClient = new QueryClient();
 const router = createBrowserRouter([
@@ -57,6 +59,14 @@ const router = createBrowserRouter([
     ),
   },
   {
+    path: "/trial",
+    element: (
+      <Layout>
+        <Practice />
+      </Layout>
+    ),
+  },
+  {
     path: "*",
     element: <Errorpage />,
   },
@@ -65,7 +75,9 @@ const router = createBrowserRouter([
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <QueryClientProvider client={queryClient}>
+      <ThemeProvider>
       <RouterProvider router={router} />
+        </ThemeProvider>
     </QueryClientProvider>
   </React.StrictMode>
 );

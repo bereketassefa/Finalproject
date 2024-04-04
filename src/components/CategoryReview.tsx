@@ -5,6 +5,7 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
+import { Card } from "./ui/card";
 function CategoryReview() {
   return (
     <section className="text-gray-600 body-font">
@@ -16,7 +17,7 @@ function CategoryReview() {
           className="w-full "
         >
           <div className="flex w-full mb-10 flex-wrap">
-            <h1 className="sm:text-3xl text-2xl font-medium title-font text-gray-900 lg:w-1/3 lg:mb-0 mb-2">
+            <h1 className="sm:text-3xl text-2xl font-medium title-font  lg:w-1/3 lg:mb-0 mb-2">
               Discover
             </h1>
             <p className="lg:pl-6 lg:w-1/3 mx-auto leading-relaxed text-base">
@@ -27,7 +28,7 @@ function CategoryReview() {
             <CarouselContent>
               {Array.from({ length: 7 }).map((_, index) => (
                 <CarouselItem key={index} className="md:basis-1/3 lg:basis-1/4">
-                  <div className="p-1">
+                  <Card className="p-1">
                     <article className="overflow-hidden rounded-lg shadow transition ">
                       <img
                         alt=""
@@ -35,7 +36,7 @@ function CategoryReview() {
                         className="h-56 w-full object-cover"
                       />
 
-                      <div className="bg-white p-4 sm:p-6">
+                      <div className=" p-4 sm:p-6">
                         <time
                           dateTime="2022-10-10"
                           className="block text-xs text-gray-500"
@@ -45,7 +46,7 @@ function CategoryReview() {
                         </time>
 
                         <a href="#">
-                          <h3 className="mt-0.5 text-lg text-gray-900">
+                          <h3 className="mt-0.5 text-lg ">
                             How to position your furniture for positivity
                           </h3>
                         </a>
@@ -61,7 +62,7 @@ function CategoryReview() {
                         </p>
                       </div>
                     </article>
-                  </div>
+                  </Card>
                 </CarouselItem>
               ))}
             </CarouselContent>

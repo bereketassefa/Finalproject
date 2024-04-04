@@ -2,6 +2,7 @@ import React from "react";
 import { Button } from "./ui/button";
 import { Link } from "react-router-dom";
 import { Package2 } from "lucide-react";
+import { ModeToggle } from "./mode-toggle";
 
 function Header() {
   const links = [
@@ -18,12 +19,12 @@ function Header() {
       link: "/profile",
     },
     {
-      name: "Another",
-      link: "#",
+      name: "Trial",
+      link: "/trial",
     },
   ];
   return (
-    <header className="bg-white">
+    <header className="">
       <div className="mx-auto max-w-screen-xl px-4 sm:px-6 lg:px-8">
         <div className="flex h-16 items-center justify-between">
           <div className="md:flex md:items-center md:gap-12">
@@ -68,6 +69,7 @@ function Header() {
 
           <div className="flex items-center gap-4">
             <div className="sm:flex sm:gap-4">
+            <ModeToggle/>
               <Button variant={"outline"}>Start a project</Button>
 
               <div className="hidden sm:flex">

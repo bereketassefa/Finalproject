@@ -52,9 +52,7 @@ export function Login() {
     },
   });
 
-  const onSubmit = (data: z.infer<typeof FormSchema>) => {
-    // mutation.mutate(data);
-  };
+  const onSubmit = () => {};
   return (
     <div className="w-full lg:grid  lg:grid-cols-2 ">
       <div className="flex items-center justify-center py-12">

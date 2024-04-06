@@ -1,19 +1,13 @@
-import React from "react";
 import { Button } from "./ui/button";
 import { Link } from "react-router-dom";
 import { Menu, Package2 } from "lucide-react";
 import { ModeToggle } from "./mode-toggle";
-
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import {
   Sheet,
   SheetClose,
   SheetContent,
-  SheetDescription,
   SheetFooter,
   SheetHeader,
-  SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
 import Maxwidth from "./Maxwidth";

@@ -1,14 +1,13 @@
-import { useState } from "react";
+import Maxwidth from "@/components/Maxwidth";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import {
   BriefcaseIcon,
   ChevronRightIcon,
   CurrencyDollarIcon,
 } from "@heroicons/react/24/solid";
-import { Button } from "@/components/ui/button";
-import Card from "@/components/Card";
-import { Badge } from "@/components/ui/badge";
-import { Link, NavLink, Outlet } from "react-router-dom";
-import Maxwidth from "@/components/Maxwidth";
+import { useState } from "react";
+import { NavLink, Outlet } from "react-router-dom";
 
 const user = {
   name: "Whitney Francis",

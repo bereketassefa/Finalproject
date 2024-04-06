@@ -1,5 +1,3 @@
-import useQuery from "@tanstack/react-query";
-
 const posts = [
   { id: 1, title: "title 1" },
   { id: 2, title: "title 2" },

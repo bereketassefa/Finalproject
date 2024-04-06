@@ -1,33 +1,28 @@
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import React from "react";
 import ReactDOM from "react-dom/client";
-import App from "./App.tsx";
-import "./index.css";
+import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import "./assets/fonts/Montserrat-ExtraBold.ttf";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import {
-  BrowserRouter,
-  RouterProvider,
-  createBrowserRouter,
-} from "react-router-dom";
-import Home from "./pages/Home.tsx";
-import { Dashboard } from "./pages/Dashboard.tsx";
-import { Login } from "./pages/Login.tsx";
-import { Signup } from "./pages/SignUp.tsx";
-import Layout from "./components/layout.tsx";
 import Errorpage from "./components/Errorpage.tsx";
-import Profile from "./pages/Profile.tsx";
-import ProjectDetail from "./pages/ProjectDetail.tsx";
-import { ThemeProvider } from "./components/themeProvider.tsx";
+import Campaign from "./components/dashboard/Campaign.tsx";
+import Manage from "./components/dashboard/Manage.tsx";
+import Layout from "./components/layout.tsx";
 import Practice from "./components/practice.tsx";
-import NewProject from "./pages/NewProject.tsx";
-import { Toaster } from "./components/ui/sonner.tsx";
-import ProfileProject from "./components/profile/ProfileProject.tsx";
 import ProfileAbout from "./components/profile/ProfileAbout.tsx";
 import ProfileBacked from "./components/profile/ProfileBacked.tsx";
 import ProfileFavorite from "./components/profile/ProfileFavorite.tsx";
-import Campaign from "./components/dashboard/Campaign.tsx";
-import Manage from "./components/dashboard/Manage.tsx";
+import ProfileProject from "./components/profile/ProfileProject.tsx";
+import { ThemeProvider } from "./components/themeProvider.tsx";
+import { Toaster } from "./components/ui/sonner.tsx";
+import "./index.css";
+import { Dashboard } from "./pages/Dashboard.tsx";
+import Home from "./pages/Home.tsx";
+import { Login } from "./pages/Login.tsx";
+import NewProject from "./pages/NewProject.tsx";
+import Profile from "./pages/Profile.tsx";
+import ProjectDetail from "./pages/ProjectDetail.tsx";
 import { SearchResult } from "./pages/SearchResult.tsx";
+import { Signup } from "./pages/SignUp.tsx";
 
 const queryClient = new QueryClient();
 const router = createBrowserRouter([

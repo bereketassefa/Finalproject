@@ -20,12 +20,8 @@ import { Badge } from "@/components/ui/badge";
 import {
   Activity,
   ArrowUpRight,
-  CircleUser,
   CreditCard,
   DollarSign,
-  Menu,
-  Package2,
-  Search,
   Users,
 } from "lucide-react";
 import { Button } from "../ui/button";

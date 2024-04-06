@@ -1,4 +1,3 @@
-import Card from "./Card";
 import Maxwidth from "./Maxwidth";
 import SuggesionCard from "./SuggesionCard";
 

@@ -1,5 +1,3 @@
-import React from "react";
-
 function SuggesionCard({ className }: { className?: string }) {
   return (
     <article

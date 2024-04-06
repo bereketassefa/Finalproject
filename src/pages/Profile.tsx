@@ -6,49 +6,14 @@ import {
   ChevronRightIcon,
   CurrencyDollarIcon,
 } from "@heroicons/react/24/solid";
-import { useState } from "react";
+
 import { NavLink, Outlet } from "react-router-dom";
 
-const user = {
-  name: "Whitney Francis",
-  email: "whitney.francis@example.com",
-  imageUrl:
-    "https://images.unsplash.com/photo-1517365830460-955ce3ccd263?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
-};
-
-const userNavigation = [
-  { name: "Your Profile", href: "#" },
-  { name: "Settings", href: "#" },
-  { name: "Sign out", href: "#" },
-];
 const tabs = [
   { name: "About", href: "/profile/about", count: "2", current: false },
   { name: "Backed", href: "/profile/backed", count: "4", current: false },
   { name: "Created", href: "/profile/", count: "6", current: true },
   { name: "Favorite", href: "/profile/favorite", current: false },
-];
-const candidates = [
-  {
-    name: "Emily Selman",
-    email: "emily.selman@example.com",
-    imageUrl:
-      "https://images.unsplash.com/photo-1502685104226-ee32379fefbe?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
-    applied: "January 7, 2020",
-    appliedDatetime: "2020-07-01T15:34:56",
-    status: "Completed phone screening",
-  },
-];
-const publishingOptions = [
-  {
-    name: "Published",
-    description: "This job posting can be viewed by anyone who has the link.",
-    current: true,
-  },
-  {
-    name: "Draft",
-    description: "This job posting will no longer be publicly accessible.",
-    current: false,
-  },
 ];
 
 function classNames(...classes: any) {
@@ -56,8 +21,6 @@ function classNames(...classes: any) {
 }
 
 export default function Profile() {
-  const [selected, setSelected] = useState(publishingOptions[0]);
-
   return (
     <>
       <div className="min-h-full">

@@ -1,8 +1,10 @@
 import React from "react";
+import { Separator } from "./ui/separator";
 
 function Footer() {
   return (
-    <footer className="bg-gray-100">
+    <footer className="">
+      <Separator />
       <div className="mx-auto max-w-5xl px-4 py-16 sm:px-6 lg:px-8">
         <div className="flex justify-center text-primary">
           <svg
@@ -54,67 +56,49 @@ function Footer() {
           </svg>
         </div>
 
-        <p className="mx-auto mt-6 max-w-md text-center leading-relaxed text-gray-500">
+        <p className="mx-auto mt-6 max-w-md text-center leading-relaxed text-muted-foreground">
           Lorem ipsum dolor, sit amet consectetur adipisicing elit. Incidunt
           consequuntur amet culpa cum itaque neque.
         </p>
 
         <ul className="mt-12 flex flex-wrap justify-center gap-6 md:gap-8 lg:gap-12">
           <li>
-            <a
-              className="text-gray-700 transition hover:text-gray-700/75"
-              href="#"
-            >
+            <a className="text-muted-foreground transition " href="#">
               {" "}
               About{" "}
             </a>
           </li>
 
           <li>
-            <a
-              className="text-gray-700 transition hover:text-gray-700/75"
-              href="#"
-            >
+            <a className="text-muted-foreground transition " href="#">
               {" "}
               Careers{" "}
             </a>
           </li>
 
           <li>
-            <a
-              className="text-gray-700 transition hover:text-gray-700/75"
-              href="#"
-            >
+            <a className="text-muted-foreground transition " href="#">
               {" "}
               History{" "}
             </a>
           </li>
 
           <li>
-            <a
-              className="text-gray-700 transition hover:text-gray-700/75"
-              href="#"
-            >
+            <a className="text-muted-foreground transition " href="#">
               {" "}
               Services{" "}
             </a>
           </li>
 
           <li>
-            <a
-              className="text-gray-700 transition hover:text-gray-700/75"
-              href="#"
-            >
+            <a className="text-muted-foreground transition " href="#">
               {" "}
               Projects{" "}
             </a>
           </li>
 
           <li>
-            <a
-              className="text-gray-700 transition hover:text-gray-700/75"
-              href="#"
-            >
+            <a className="text-muted-foreground transition " href="#">
               {" "}
               Blog{" "}
             </a>
@@ -127,7 +111,7 @@ function Footer() {
               href="#"
               rel="noreferrer"
               target="_blank"
-              className="text-gray-700 transition hover:text-gray-700/75"
+              className="text-muted-foreground transition "
             >
               <span className="sr-only">Facebook</span>
               <svg
@@ -150,7 +134,7 @@ function Footer() {
               href="#"
               rel="noreferrer"
               target="_blank"
-              className="text-gray-700 transition hover:text-gray-700/75"
+              className="text-muted-foreground transition "
             >
               <span className="sr-only">Instagram</span>
               <svg
@@ -173,7 +157,7 @@ function Footer() {
               href="#"
               rel="noreferrer"
               target="_blank"
-              className="text-gray-700 transition hover:text-gray-700/75"
+              className="text-muted-foreground transition "
             >
               <span className="sr-only">Twitter</span>
               <svg
@@ -192,7 +176,7 @@ function Footer() {
               href="#"
               rel="noreferrer"
               target="_blank"
-              className="text-gray-700 transition hover:text-gray-700/75"
+              className="text-muted-foreground transition "
             >
               <span className="sr-only">GitHub</span>
               <svg
@@ -215,7 +199,7 @@ function Footer() {
               href="#"
               rel="noreferrer"
               target="_blank"
-              className="text-gray-700 transition hover:text-gray-700/75"
+              className="text-muted-foreground transition "
             >
               <span className="sr-only">Dribbble</span>
               <svg

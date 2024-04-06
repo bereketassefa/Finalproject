@@ -63,27 +63,27 @@ function Hero() {
             <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
               <div className="max-w-4xl mx-auto">
                 <dl className="rounded-lg  shadow-lg sm:grid sm:grid-cols-3">
-                  <div className="flex flex-col border-b border-gray-100 p-6 text-center sm:border-0 sm:border-r">
+                  <div className="flex flex-col border-b border-border p-6 text-center sm:border-0 sm:border-r">
                     <dt className="order-2 mt-2 text-lg leading-6 font-medium text-gray-500">
                       Pepperoni
                     </dt>
-                    <dd className="order-1 text-5xl font-extrabold text-indigo-600">
+                    <dd className="order-1 text-5xl font-extrabold text-primary">
                       100%
                     </dd>
                   </div>
-                  <div className="flex flex-col border-t border-b border-gray-100 p-6 text-center sm:border-0 sm:border-l sm:border-r">
+                  <div className="flex flex-col border-t border-b border-border p-6 text-center sm:border-0 sm:border-l sm:border-r">
                     <dt className="order-2 mt-2 text-lg leading-6 font-medium text-gray-500">
                       Delivery
                     </dt>
-                    <dd className="order-1 text-5xl font-extrabold text-indigo-600">
+                    <dd className="order-1 text-5xl font-extrabold text-primary">
                       24/7
                     </dd>
                   </div>
-                  <div className="flex flex-col border-t border-gray-100 p-6 text-center sm:border-0 sm:border-l">
+                  <div className="flex flex-col border-t border-border p-6 text-center sm:border-0 sm:border-l">
                     <dt className="order-2 mt-2 text-lg leading-6 font-medium text-gray-500">
                       Calories
                     </dt>
-                    <dd className="order-1 text-5xl font-extrabold text-indigo-600">
+                    <dd className="order-1 text-5xl font-extrabold text-primary">
                       100k
                     </dd>
                   </div>

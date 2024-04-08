@@ -6,8 +6,45 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel";
 import Card from "./Card";
+import { useQuery } from "@tanstack/react-query";
+import axios from "axios";
+import Loading from "./Loading";
+
+type Project = {
+  _id: string;
+  title: string;
+  descreptons: string;
+  catagory: string[];
+  goal: number;
+  imagesLink: string[];
+  creator: {
+    username: string;
+    userid: string;
+  };
+  amountReached: number;
+  __v: number;
+  percentfunded: number;
+  daysLeft: number;
+};
+
+type ProjectsResponse = {
+  projects: Project[];
+};
 
 function CategoryReview() {
+  const { data, isLoading } = useQuery<ProjectsResponse>({
+    queryKey: ["recommended"],
+    queryFn: () =>
+      axios
+        .get(
+          "https://acbcd38f-d4d3-4925-934c-0b79dd02dcf4.mock.pstmn.io/api/projects"
+        )
+        .then((data) => data.data),
+  });
+  if (isLoading || !data) {
+    return <Loading />;
+  }
+
   return (
     <section className=" body-font">
       <div className="container px-5 py-10 mx-auto flex flex-wrap">
@@ -27,9 +64,10 @@ function CategoryReview() {
           </div>
           <div className="w-full">
             <CarouselContent>
-              {Array.from({ length: 7 }).map((_, index) => (
+              {/* {JSON.stringify(data)} */}
+              {data.projects.map((each, index) => (
                 <CarouselItem key={index} className="md:basis-1/3 lg:basis-1/4">
-                  <Card />
+                  <Card data={each} />
                 </CarouselItem>
               ))}
             </CarouselContent>

@@ -23,6 +23,7 @@ import Profile from "./pages/Profile.tsx";
 import ProjectDetail from "./pages/ProjectDetail.tsx";
 import { SearchResult } from "./pages/SearchResult.tsx";
 import { Signup } from "./pages/SignUp.tsx";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
 const queryClient = new QueryClient();
 const router = createBrowserRouter([
@@ -57,7 +58,7 @@ const router = createBrowserRouter([
     element: <Signup />,
   },
   {
-    path: "/profile",
+    path: "/profile/:id",
     element: (
       <Layout>
         <Profile />
@@ -66,25 +67,25 @@ const router = createBrowserRouter([
 
     children: [
       {
-        path: "/profile",
+        path: "/profile/:id",
         element: <ProfileProject />,
       },
       {
-        path: "/profile/about",
+        path: "/profile/:id/about",
         element: <ProfileAbout />,
       },
       {
-        path: "/profile/backed",
+        path: "/profile/:id/backed",
         element: <ProfileBacked />,
       },
       {
-        path: "/profile/favorite",
+        path: "/profile/:id/favorite",
         element: <ProfileFavorite />,
       },
     ],
   },
   {
-    path: "/project",
+    path: "/project/:id",
     element: (
       <Layout>
         <ProjectDetail />
@@ -128,6 +129,7 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
         <RouterProvider router={router} />
         <Toaster />
       </ThemeProvider>
+      <ReactQueryDevtools initialIsOpen={false} />
     </QueryClientProvider>
   </React.StrictMode>
 );

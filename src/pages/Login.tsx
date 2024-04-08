@@ -13,7 +13,7 @@ import { useMutation } from "@tanstack/react-query";
 import axios from "axios";
 import { Loader } from "lucide-react";
 import { useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 import { z } from "zod";
 
@@ -27,6 +27,7 @@ const FormSchema = z.object({
 });
 
 export function Login() {
+  const navigate = useNavigate();
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
@@ -36,23 +37,26 @@ export function Login() {
   });
 
   const mutation = useMutation({
-    mutationFn: (newTodo) => {
+    mutationFn: (newTodo: z.infer<typeof FormSchema>) => {
       return axios.post(
         "https://acbcd38f-d4d3-4925-934c-0b79dd02dcf4.mock.pstmn.io/api/creator/login",
         newTodo
       );
     },
     onSuccess: (data) => {
-      console.log(data.data.accessToken);
+      toast("You have successfully logged in");
       localStorage.setItem("token", data.data.accessToken);
       localStorage.setItem("id", data.data.userid);
+      navigate("/");
     },
     onError: () => {
       toast("Error sending request");
     },
   });
 
-  const onSubmit = () => {};
+  const onSubmit = (data: z.infer<typeof FormSchema>) => {
+    mutation.mutate(data);
+  };
   return (
     <div className="w-full lg:grid  lg:grid-cols-2 ">
       <div className="flex items-center justify-center py-12">
@@ -90,7 +94,7 @@ export function Login() {
                   name="password"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Username</FormLabel>
+                      <FormLabel>Password</FormLabel>
                       <FormControl>
                         <Input
                           type="password"

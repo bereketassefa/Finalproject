@@ -1,3 +1,4 @@
+import Loading from "@/components/Loading";
 import MaxCard from "@/components/MaxCard";
 import Maxwidth from "@/components/Maxwidth";
 import PostCard from "@/components/PostCard";
@@ -5,37 +6,34 @@ import RewardCard from "@/components/Reward";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { useQuery } from "@tanstack/react-query";
 import MarkdownEditor from "@uiw/react-markdown-editor";
+import axios from "axios";
+import { useParams } from "react-router-dom";
 
 function ProjectDetail() {
-  const mdStr = `
-  ---
-__Advertisement :)__
+  let { id } = useParams();
 
-- __[pica](https://nodeca.github.io/pica/demo/)__ - high quality and fast image
-  resize in browser.
-- __[babelfish](https://github.com/nodeca/babelfish/)__ - developer friendly
-  i18n with plurals support and easy syntax.
-
-You will like those projects!
-
----
-
-# h1 Heading 8-)
-## h2 Heading
-### h3 Heading
-#### h4 Heading
-##### h5 Heading
-###### h6 Heading
-
-
-## Horizontal Rules
-  `;
+  const { data, isLoading, isError } = useQuery<any>({
+    queryKey: ["projectDetail"],
+    queryFn: () =>
+      axios
+        .get(
+          `https://acbcd38f-d4d3-4925-934c-0b79dd02dcf4.mock.pstmn.io/api/projects/single?projectid=${id}`
+        )
+        .then((data) => data.data),
+  });
+  if (isLoading) {
+    return <Loading />;
+  }
+  if (isError) {
+    <h1>there is error loading page</h1>;
+  }
 
   return (
     <Maxwidth>
       <div className="flex items-center justify-center flex-col py-4">
-        <h2 className="font-bold text-3xl py-3">project name</h2>
+        <h2 className="font-bold text-3xl py-3">{data.project.title}</h2>
         <h3 className="font-semibold py-2">
           Lorem, ipsum dolor sit amet consectetur adipisicing elit. Laboriosam,
           dolore
@@ -44,9 +42,12 @@ You will like those projects!
       <div className="grid grid-cols-5 gap-8">
         <div className="col-span-5 md:col-span-3 h-[400px] w-full border"></div>
         <div className="col-span-5 md:col-span-2 h-auto w-full">
-          <Progress value={80} className=" rounded-[0] h-2" />
+          <Progress
+            value={(data.project.goal / data.project.amountReached) * 100}
+            className=" rounded-[0] h-2"
+          />
           <div className="my-3">
-            <h1 className="text-3xl">$300</h1>
+            <h1 className="text-3xl">{data.project.amountReached}</h1>
             <p className="text-muted-foreground">total raised</p>
           </div>
           <div className="my-3">
@@ -54,7 +55,7 @@ You will like those projects!
             <p className="text-muted-foreground">Backers</p>
           </div>
           <div className="my-3">
-            <h1 className="text-3xl">20 </h1>
+            <h1 className="text-3xl">{data.project.daysLeft}</h1>
             <p className="text-muted-foreground">Days remaining</p>
           </div>
           <Button className="w-full">Back project</Button>
@@ -70,16 +71,19 @@ You will like those projects!
         <TabsContent value="campaign">
           <div className="wmde-markdown-var"> </div>
 
-          <MarkdownEditor.Markdown source={mdStr} className="px-5 " />
+          <MarkdownEditor.Markdown
+            source={data.project.descreptons}
+            className="px-5 "
+          />
         </TabsContent>
         <TabsContent value="reward">
           <MaxCard>
-            <RewardCard />
+            <RewardCard reward={data.project.reward} />
           </MaxCard>
         </TabsContent>
         <TabsContent value="faq">faq</TabsContent>
         <TabsContent value="updates">
-          <PostCard />
+          <PostCard updates={data.project.updates} />
         </TabsContent>
       </Tabs>
     </Maxwidth>

@@ -1,6 +1,6 @@
 import { Button } from "./ui/button";
-import { Link } from "react-router-dom";
-import { Menu, Package2 } from "lucide-react";
+import { Link, useNavigate } from "react-router-dom";
+import { CircleUser, Menu, Package2 } from "lucide-react";
 import { ModeToggle } from "./mode-toggle";
 import {
   Sheet,
@@ -11,8 +11,19 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import Maxwidth from "./Maxwidth";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { useState } from "react";
 
 function Header() {
+  const [isLogged, setIsLogged] = useState(localStorage.getItem("token"));
+  // let isLogged = localStorage.getItem("token");
   const links = [
     {
       name: "Home",
@@ -24,7 +35,7 @@ function Header() {
     },
     {
       name: "Profile",
-      link: "/profile",
+      link: "/profile/66123f0b7e066b428c451f63",
     },
     {
       name: "Trial",
@@ -36,9 +47,10 @@ function Header() {
     },
     {
       name: "Project",
-      link: "/project",
+      link: "/project/66123bb07c600676ffb1bd15",
     },
   ];
+  const navigate = useNavigate();
   return (
     <header className="">
       <Maxwidth>
@@ -78,9 +90,47 @@ function Header() {
                 </Button>
 
                 <div className="hidden sm:flex">
-                  <Button asChild>
-                    <Link to={"/login"}>Login</Link>
-                  </Button>
+                  {isLogged ? (
+                    <DropdownMenu>
+                      <DropdownMenuTrigger asChild>
+                        <Button
+                          variant="secondary"
+                          size="icon"
+                          className="rounded-full"
+                        >
+                          <CircleUser className="h-5 w-5" />
+                          <span className="sr-only">Toggle user menu</span>
+                        </Button>
+                      </DropdownMenuTrigger>
+                      <DropdownMenuContent align="end">
+                        <DropdownMenuLabel>My Account</DropdownMenuLabel>
+                        <DropdownMenuSeparator />
+                        <DropdownMenuItem
+                          onClick={() => {
+                            let id = localStorage.getItem("id");
+                            navigate(`/profile/${id}`);
+                          }}
+                        >
+                          profile
+                        </DropdownMenuItem>
+                        <DropdownMenuItem>Support</DropdownMenuItem>
+                        <DropdownMenuSeparator />
+                        <DropdownMenuItem
+                          onClick={() => {
+                            localStorage.removeItem("token");
+                            localStorage.removeItem("id");
+                            setIsLogged("");
+                          }}
+                        >
+                          Logout
+                        </DropdownMenuItem>
+                      </DropdownMenuContent>
+                    </DropdownMenu>
+                  ) : (
+                    <Button asChild>
+                      <Link to={"/login"}>Login</Link>
+                    </Button>
+                  )}
                 </div>
               </div>
 

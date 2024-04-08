@@ -13,7 +13,8 @@ const Home = () => {
       <Hero />
       <Recommended />
       <CategoryReview />
-      <CTA />
+      {!localStorage.getItem("token") && <CTA />}
+      {/* <CTA /> */}
     </div>
   );
 };

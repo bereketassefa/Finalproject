@@ -20,7 +20,7 @@ import ReactSelect, { GroupBase, OptionsOrGroups } from "react-select";
 import { cn } from "@/lib/utils";
 
 const FormSchema = z.object({
-  username: z.string().min(2, {
+  email: z.string().min(2, {
     message: "Username must be at least 2 characters.",
   }),
   password: z.string().min(2, {
@@ -55,10 +55,7 @@ export function Signup() {
 
   const mutation = useMutation({
     mutationFn: (newTodo: z.infer<typeof FormSchema>) => {
-      return axios.post(
-        "https://acbcd38f-d4d3-4925-934c-0b79dd02dcf4.mock.pstmn.io/api/creator",
-        newTodo
-      );
+      return axios.post("http://localhost:3000/api/creator", newTodo);
     },
     onSuccess: () => {
       toast("You have successfully signed up");
@@ -70,7 +67,8 @@ export function Signup() {
   });
   const onSubmit = (data: z.infer<typeof FormSchema>) => {
     console.log(data);
-    mutation.mutate(data);
+    // data.
+    // mutation.mutate(data);
   };
   const options = [
     { value: "chocolate", label: "Chocolate" },

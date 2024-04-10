@@ -18,8 +18,8 @@ import { toast } from "sonner";
 import { z } from "zod";
 
 const FormSchema = z.object({
-  username: z.string().min(2, {
-    message: "Username must be at least 2 characters.",
+  email: z.string().min(2, {
+    message: "Email must be at least 2 characters.",
   }),
   password: z.string().min(2, {
     message: "password must be at least 2 characters.",
@@ -31,22 +31,20 @@ export function Login() {
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
-      username: "",
+      email: "",
       password: "",
     },
   });
 
   const mutation = useMutation({
     mutationFn: (newTodo: z.infer<typeof FormSchema>) => {
-      return axios.post(
-        "https://acbcd38f-d4d3-4925-934c-0b79dd02dcf4.mock.pstmn.io/api/creator/login",
-        newTodo
-      );
+      return axios.post("http://localhost:3000/api/creator/login", newTodo);
     },
     onSuccess: (data) => {
       toast("You have successfully logged in");
       localStorage.setItem("token", data.data.accessToken);
       localStorage.setItem("id", data.data.userid);
+      localStorage.setItem("name", data.data.username);
       navigate("/");
     },
     onError: () => {
@@ -75,10 +73,10 @@ export function Login() {
               >
                 <FormField
                   control={form.control}
-                  name="username"
+                  name="email"
                   render={({ field }) => (
                     <FormItem>
-                      <FormLabel>Username</FormLabel>
+                      <FormLabel>Email</FormLabel>
                       <FormControl>
                         <Input placeholder="username" {...field} />
                       </FormControl>

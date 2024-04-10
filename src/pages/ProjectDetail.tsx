@@ -18,22 +18,29 @@ function ProjectDetail() {
     queryKey: ["projectDetail"],
     queryFn: () =>
       axios
+        .get(`http://localhost:3000/api/projects/single?projectid=${id}`)
+        .then((data) => data.data),
+  });
+  const detailstat = useQuery<any>({
+    queryKey: ["detailstat"],
+    queryFn: () =>
+      axios
         .get(
-          `https://acbcd38f-d4d3-4925-934c-0b79dd02dcf4.mock.pstmn.io/api/projects/single?projectid=${id}`
+          `http://localhost:3000/api/projects/singleprojectmetrics?projectid=${id}`
         )
         .then((data) => data.data),
   });
-  if (isLoading) {
+  if (isLoading || detailstat.isLoading) {
     return <Loading />;
   }
-  if (isError) {
+  if (isError || detailstat.isError) {
     <h1>there is error loading page</h1>;
   }
 
   return (
     <Maxwidth>
       <div className="flex items-center justify-center flex-col py-4">
-        <h2 className="font-bold text-3xl py-3">{data.project.title}</h2>
+        <h2 className="font-bold text-3xl py-3">{data?.project.title}</h2>
         <h3 className="font-semibold py-2">
           Lorem, ipsum dolor sit amet consectetur adipisicing elit. Laboriosam,
           dolore
@@ -42,12 +49,13 @@ function ProjectDetail() {
       <div className="grid grid-cols-5 gap-8">
         <div className="col-span-5 md:col-span-3 h-[400px] w-full border"></div>
         <div className="col-span-5 md:col-span-2 h-auto w-full">
+          {JSON.stringify(detailstat.data)}
           <Progress
-            value={(data.project.goal / data.project.amountReached) * 100}
+            value={(data?.project.goal / data?.project.amountReached) * 100}
             className=" rounded-[0] h-2"
           />
           <div className="my-3">
-            <h1 className="text-3xl">{data.project.amountReached}</h1>
+            <h1 className="text-3xl">{data?.project.amountReached}</h1>
             <p className="text-muted-foreground">total raised</p>
           </div>
           <div className="my-3">
@@ -55,10 +63,13 @@ function ProjectDetail() {
             <p className="text-muted-foreground">Backers</p>
           </div>
           <div className="my-3">
-            <h1 className="text-3xl">{data.project.daysLeft}</h1>
+            <h1 className="text-3xl">{data?.project.daysLeft}</h1>
             <p className="text-muted-foreground">Days remaining</p>
           </div>
           <Button className="w-full">Back project</Button>
+          <Button className="w-full mt-4" variant={"outline"}>
+            Add to Favorite
+          </Button>
         </div>
       </div>
       <Tabs defaultValue="campaign" className="mt-5">
@@ -72,18 +83,18 @@ function ProjectDetail() {
           <div className="wmde-markdown-var"> </div>
 
           <MarkdownEditor.Markdown
-            source={data.project.descreptons}
+            source={data?.project.descreptons}
             className="px-5 "
           />
         </TabsContent>
         <TabsContent value="reward">
           <MaxCard>
-            <RewardCard reward={data.project.reward} />
+            <RewardCard reward={data?.project.reward} />
           </MaxCard>
         </TabsContent>
         <TabsContent value="faq">faq</TabsContent>
         <TabsContent value="updates">
-          <PostCard updates={data.project.updates} />
+          <PostCard updates={data?.project.updates} />
         </TabsContent>
       </Tabs>
     </Maxwidth>

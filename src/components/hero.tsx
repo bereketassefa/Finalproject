@@ -7,9 +7,7 @@ function Hero() {
     queryKey: ["hero"],
     queryFn: () =>
       axios
-        .get(
-          "https://acbcd38f-d4d3-4925-934c-0b79dd02dcf4.mock.pstmn.io/api/projects/stats"
-        )
+        .get("http://localhost:3000/api/projects/stats")
         .then((data) => data.data),
   });
   if (isLoading) {
@@ -22,11 +20,11 @@ function Hero() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-4xl mx-auto text-center">
             <h2 className="text-3xl font-extrabold  sm:text-4xl">
-              Trusted by developers from over 80 planets
+              Bring your idea to success
             </h2>
             <p className="mt-3 text-xl text-gray-500 sm:mt-4">
-              Lorem ipsum dolor, sit amet consectetur adipisicing elit.
-              Repellendus repellat laudantium.
+              Empower creators, unite backers, fuel innovation, democratize
+              funding, celebrate dreams.
             </p>
           </div>
         </div>
@@ -38,15 +36,15 @@ function Hero() {
                 <dl className="rounded-lg  shadow-lg sm:grid sm:grid-cols-3">
                   <div className="flex flex-col border-b border-border p-6 text-center sm:border-0 sm:border-r">
                     <dt className="order-2 mt-2 text-lg leading-6 font-medium text-gray-500">
-                      Pepperoni
+                      Collected
                     </dt>
                     <dd className="order-1 text-5xl font-extrabold text-primary">
-                      {data?.totalnumberofdonations}
+                      ${data?.totalnumberofdonations}
                     </dd>
                   </div>
                   <div className="flex flex-col border-t border-b border-border p-6 text-center sm:border-0 sm:border-l sm:border-r">
                     <dt className="order-2 mt-2 text-lg leading-6 font-medium text-gray-500">
-                      Delivery
+                      Projects
                     </dt>
                     <dd className="order-1 text-5xl font-extrabold text-primary">
                       {data?.numberofprojects}
@@ -54,7 +52,7 @@ function Hero() {
                   </div>
                   <div className="flex flex-col border-t border-border p-6 text-center sm:border-0 sm:border-l">
                     <dt className="order-2 mt-2 text-lg leading-6 font-medium text-gray-500">
-                      Calories
+                      Pledge
                     </dt>
                     <dd className="order-1 text-5xl font-extrabold text-primary">
                       {data?.pledges}

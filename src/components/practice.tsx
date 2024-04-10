@@ -13,13 +13,10 @@ const Practice = (setImage) => {
       const data = new FormData();
       data.append("coverimagee", formData.file);
       // Replace with your actual endpoint URL
-      return fetch(
-        "https://acbcd38f-d4d3-4925-934c-0b79dd02dcf4.mock.pstmn.io/api/projects/uploadimages",
-        {
-          method: "POST",
-          body: data,
-        }
-      );
+      return fetch("http://localhost:3000/api/projects/uploadimages", {
+        method: "POST",
+        body: data,
+      });
     },
 
     onError: (error: any) => {

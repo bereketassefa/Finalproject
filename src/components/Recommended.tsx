@@ -31,9 +31,11 @@ function Recommended() {
     queryKey: ["featured"],
     queryFn: () =>
       axios
-        .get(
-          "https://acbcd38f-d4d3-4925-934c-0b79dd02dcf4.mock.pstmn.io/api/projects/recomended"
-        )
+        .get("http://localhost:3000/api/projects/recomended", {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        })
         .then((data) => data.data),
   });
   if (isLoading || !data) {

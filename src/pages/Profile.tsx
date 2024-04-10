@@ -2,11 +2,12 @@ import Loading from "@/components/Loading";
 import Maxwidth from "@/components/Maxwidth";
 import { Button } from "@/components/ui/button";
 import { ChevronRightIcon } from "@heroicons/react/24/solid";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import axios from "axios";
-import { HashIcon } from "lucide-react";
+import { HashIcon, Loader } from "lucide-react";
 
 import { NavLink, Outlet, useParams } from "react-router-dom";
+import { toast } from "sonner";
 
 function classNames(...classes: any) {
   return classes.filter(Boolean).join(" ");
@@ -43,11 +44,31 @@ export default function Profile() {
     queryKey: ["profile"],
     queryFn: () =>
       axios
-        .get(
-          `https://acbcd38f-d4d3-4925-934c-0b79dd02dcf4.mock.pstmn.io/api/creator/?creatorid=${id}`
-        )
+        .get(`http://localhost:3000/api/creator/?creatorid=${id}`)
         .then((data) => data.data),
   });
+  const sendFollow = useMutation({
+    mutationFn: () => {
+      return axios
+        .post(`http://localhost:3000/api/follow`, {
+          followerid: localStorage.getItem("id"),
+          followedid: id,
+        })
+        .then((data) => data.data);
+    },
+    onSuccess: () => {
+      toast("You followed the creator");
+    },
+  });
+
+  const followUser = () => {
+    const userId = localStorage.getItem("id");
+    if (!userId) {
+      toast("Please login first");
+      return;
+    }
+    sendFollow.mutate();
+  };
   if (isLoading) {
     return <Loading />;
   }
@@ -56,6 +77,7 @@ export default function Profile() {
     { name: "Created", href: `/profile/${id}/`, current: true },
     { name: "Backed", href: `/profile/${id}/backed`, current: false },
     { name: "Favorite", href: `/profile/${id}/favorite`, current: false },
+    { name: "Setting", href: `/profile/${id}/setting`, current: false },
   ];
   return (
     <>
@@ -110,9 +132,18 @@ export default function Profile() {
                 </div>
               </div>
               <div className="mt-5 flex xl:mt-0 xl:ml-4">
-                <span className="">
-                  <Button>Follow</Button>
-                </span>
+                {localStorage.getItem("token") ? (
+                  <span className="">
+                    <Button onClick={() => followUser()}>
+                      {sendFollow.isPending && (
+                        <Loader className="mr-2 h-4 w-4 animate-spin" />
+                      )}
+                      Follow
+                    </Button>
+                  </span>
+                ) : (
+                  ""
+                )}
               </div>
             </div>
           </header>

@@ -7,7 +7,7 @@ function Card({ data, className }: { data: any; className?: string }) {
         <article className="overflow-hidden rounded-lg shadow transition ">
           <img
             alt=""
-            src="https://images.unsplash.com/photo-1524758631624-e2822e304c36?ixlib=rb-1.2.1&ixid=MnwxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2070&q=80"
+            src={`http://localhost:3000/api/projects/readimage?filename=${data.imagesLink}`}
             className="h-44 w-full object-cover"
           />
 

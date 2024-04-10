@@ -21,9 +21,10 @@ import { Login } from "./pages/Login.tsx";
 import NewProject from "./pages/NewProject.tsx";
 import Profile from "./pages/Profile.tsx";
 import ProjectDetail from "./pages/ProjectDetail.tsx";
-import { SearchResult } from "./pages/SearchResult.tsx";
+import SearchResult from "./pages/SearchResult.tsx";
 import { Signup } from "./pages/SignUp.tsx";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import ProfileSetting from "./components/profile/ProfileSetting.tsx";
 
 const queryClient = new QueryClient();
 const router = createBrowserRouter([
@@ -70,10 +71,10 @@ const router = createBrowserRouter([
         path: "/profile/:id",
         element: <ProfileProject />,
       },
-      {
-        path: "/profile/:id/about",
-        element: <ProfileAbout />,
-      },
+      // {
+      //   path: "/profile/:id/about",
+      //   element: <ProfileAbout />,
+      // },
       {
         path: "/profile/:id/backed",
         element: <ProfileBacked />,
@@ -81,6 +82,10 @@ const router = createBrowserRouter([
       {
         path: "/profile/:id/favorite",
         element: <ProfileFavorite />,
+      },
+      {
+        path: "/profile/:id/setting",
+        element: <ProfileSetting />,
       },
     ],
   },

@@ -35,11 +35,7 @@ function CategoryReview() {
   const { data, isLoading } = useQuery<ProjectsResponse>({
     queryKey: ["recommended"],
     queryFn: () =>
-      axios
-        .get(
-          "https://acbcd38f-d4d3-4925-934c-0b79dd02dcf4.mock.pstmn.io/api/projects"
-        )
-        .then((data) => data.data),
+      axios.get("http://localhost:3000/api/projects").then((data) => data.data),
   });
   if (isLoading || !data) {
     return <Loading />;

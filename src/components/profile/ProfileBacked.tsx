@@ -9,14 +9,17 @@ function ProfileBacked() {
     queryKey: ["ProfileBacked"],
     queryFn: () =>
       fetch(
-        `https://acbcd38f-d4d3-4925-934c-0b79dd02dcf4.mock.pstmn.io/api/creator/backedprojects/?creatorid=${id}`
+        `http://localhost:3000/api/creator/backedprojects/?creatorid=${id}`
       ).then((res) => res.json()),
   });
   if (query.isLoading) return <Loading />;
   return (
     <div>
+      {query.data?.backedproject.backedproject.length == 0 && (
+        <h1>You did't back any project yet</h1>
+      )}
       <div className="grid grid-cols-2 md:grid-cols-4 ">
-        {query.data.backedproject.backedproject.map((each) => (
+        {query.data?.backedproject.backedproject.map((each) => (
           <Card className="col-span-1" data={each} />
         ))}
         {/* <Card className="col-span-1" />

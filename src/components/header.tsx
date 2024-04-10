@@ -1,6 +1,6 @@
 import { Button } from "./ui/button";
 import { Link, useNavigate } from "react-router-dom";
-import { CircleUser, Menu, Package2 } from "lucide-react";
+import { CircleUser, HandCoins, Menu, Package2 } from "lucide-react";
 import { ModeToggle } from "./mode-toggle";
 import {
   Sheet,
@@ -35,7 +35,7 @@ function Header() {
     },
     {
       name: "Profile",
-      link: "/profile/66123f0b7e066b428c451f63",
+      link: "/profile/66150dffbadbcfe68b11d2db",
     },
     {
       name: "Trial",
@@ -61,7 +61,8 @@ function Header() {
                 to="/"
                 className="flex items-center gap-2 text-lg font-semibold md:text-base"
               >
-                <Package2 className="h-6 w-6" />
+                {/* <Package2 className="h-6 w-6" /> */}
+                <HandCoins className="h-6 w-6" />
                 <span className="sr-only">Acme Inc</span>
               </Link>
             </div>

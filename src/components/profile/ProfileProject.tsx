@@ -9,19 +9,20 @@ function ProfileProject() {
     queryKey: ["profileproject"],
     queryFn: () =>
       fetch(
-        `https://acbcd38f-d4d3-4925-934c-0b79dd02dcf4.mock.pstmn.io/api/creator/createdprojects/?creatorid=${id}`
+        `http://localhost:3000/api/creator/createdprojects/?creatorid=${id}`
       ).then((res) => res.json()),
   });
   if (query.isLoading) return <Loading />;
   return (
     <div>
       <div className="grid grid-cols-2 md:grid-cols-4 ">
-        {query.data.myproject.myproject.map((each) => (
+        {query.data?.myproject.myproject.length == 0 && (
+          <h1>You did't create any project yet</h1>
+        )}
+        {query.data?.myproject.myproject.map((each) => (
           <Card className="col-span-1" data={each} />
         ))}
-        {/* <Card className="col-span-1" />
-        <Card className="col-span-1" />
-        <Card className="col-span-1" /> */}
+        {/* {JSON.stringify(query.data)} */}
       </div>
     </div>
   );

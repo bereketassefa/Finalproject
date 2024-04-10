@@ -37,6 +37,7 @@ import { CalendarIcon } from "lucide-react";
 import { Calendar } from "@/components/ui/calendar";
 import { useMutation } from "@tanstack/react-query";
 import { toast } from "sonner";
+import axios from "axios";
 
 function NewProject() {
   const [imageFiles, setImageFiles] = useState();
@@ -52,7 +53,7 @@ function NewProject() {
         required_error: "Please select a category",
       })
       .min(1, { message: "category is required" }),
-    description: z.string().min(1, { message: "category is required" }),
+    descriptions: z.string().min(1, { message: "category is required" }),
     image: z.any(),
     // .refine((files) => {
     //   console.log(files?.[0]?.type);
@@ -75,23 +76,17 @@ function NewProject() {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      name: "",
+      name: "final project",
       category: "",
     },
   });
 
   const mutation = useMutation({
     mutationFn: (formData: any) => {
-      const data = new FormData();
-      data.append("coverimagee", formData.file);
-      // Replace with your actual endpoint URL
-      return fetch(
-        "https://acbcd38f-d4d3-4925-934c-0b79dd02dcf4.mock.pstmn.io/api/projects/uploadimages",
-        {
-          method: "POST",
-          body: data,
-        }
-      );
+      const config = {
+        headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+      };
+      return axios.post("http://localhost:3000/api/projects", formData, config);
     },
 
     onError: (error: any) => {
@@ -103,36 +98,46 @@ function NewProject() {
     },
   });
   function onSubmit(values: z.infer<typeof formSchema>) {
+    console.log(values);
     handleUpload(values)
       .then((res) => {
         return res.json();
       })
       .then((data) => {
         setImageFiles(data.filenames);
+        console.log(data.filenames);
         const project = {
           title: values.name,
-          description: values.description,
-          category: [values.category, values.secondcategory],
+          descreptons: values.descriptions,
+          catagory: [values.category, values.secondcategory],
           goal: values.goal,
           deadline: values.deadline,
-          coverimage: imageFiles,
+          imagesLink: imageFiles,
+          // imagesLink: ["coverimage_1712652282051.png"],
+          creator: {
+            username: localStorage.getItem("name"),
+            userid: localStorage.getItem("token"),
+          },
         };
-        mutation.mutate(values);
+        mutation.mutate(project);
       })
       .catch((err) => {
+        console.log(err);
         toast("there is an error saving the pictures");
       });
   }
-  const handleUpload = (formData, uploadType = "coverimageee") => {
-    const data = new FormData();
-    data.append(uploadType, formData.image);
-    return fetch(
-      "https://acbcd38f-d4d3-4925-934c-0b79dd02dcf4.mock.pstmn.io/api/projects/uploadimages",
-      {
-        method: "POST",
-        body: data,
-      }
-    );
+  const handleUpload = (data: z.infer<typeof formSchema>) => {
+    console.log(data);
+    const formData = new FormData();
+
+    formData.append("coverimage", data.image);
+    // data = { ...data, image: data.image[0].name };
+    formData.append("recipe", data.image.name);
+
+    return fetch("http://localhost:3000/api/projects/uploadimages", {
+      method: "POST",
+      body: formData,
+    });
   };
   return (
     <Maxwidth>
@@ -214,7 +219,7 @@ function NewProject() {
               />
               <FormField
                 control={form.control}
-                name="description"
+                name="descriptions"
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Description of the project</FormLabel>
@@ -235,7 +240,8 @@ function NewProject() {
               <FormField
                 control={form.control}
                 name="image"
-                render={({ field }) => (
+                rules={{ required: "Recipe picture is required" }}
+                render={({ field: { value, onChange, ...field } }) => (
                   <FormItem>
                     <FormLabel>Upload image</FormLabel>
                     <FormControl>
@@ -243,6 +249,10 @@ function NewProject() {
                         multiple
                         type="file"
                         placeholder="upload profile for your project"
+                        value={value?.fileName}
+                        onChange={(event: any) => {
+                          onChange(event.target.files[0]);
+                        }}
                         {...field}
                       />
                     </FormControl>

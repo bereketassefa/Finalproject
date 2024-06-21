@@ -1,4 +1,10 @@
-import { Link, NavLink, Outlet } from "react-router-dom";
+import {
+  Link,
+  NavLink,
+  Outlet,
+  useNavigate,
+  useParams,
+} from "react-router-dom";
 
 import { CircleUser, Menu, Package2, Search } from "lucide-react";
 
@@ -12,34 +18,34 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Input } from "@/components/ui/input";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 
 import Maxwidth from "@/components/Maxwidth";
 
 export function Dashboard() {
+  let { id } = useParams();
   const links = [
     {
       name: "Dashboard",
-      link: "/dash",
+      link: `/dash/${id}`,
     },
-    {
-      name: "Manage",
-      link: "/dash/manage",
-    },
-    {
-      name: "Backer",
-      link: "/dash/backer",
-    },
-    {
-      name: "Campaign",
-      link: "/dash/campaign",
-    },
+    // {
+    //   name: "Manage",
+    //   link: `/dash/${id}/manage`,
+    // },
+    // {
+    //   name: "Backer",
+    //   link: "/dash/backer",
+    // },
+    // {
+    //   name: "Campaign",
+    //   link: "/dash/campaign",
+    // },
   ];
   function classNames(...classes: any) {
     return classes.filter(Boolean).join(" ");
   }
-
+  const navigate = useNavigate();
   return (
     <Maxwidth>
       <div className="flex min-h-screen w-full flex-col">
@@ -131,12 +137,7 @@ export function Dashboard() {
           <div className="flex w-full items-center gap-4 md:ml-auto md:gap-2 lg:gap-4">
             <form className="ml-auto flex-1 sm:flex-initial">
               <div className="relative">
-                <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
-                <Input
-                  type="search"
-                  placeholder="Search products..."
-                  className="pl-8 sm:w-[300px] md:w-[200px] lg:w-[300px]"
-                />
+                {/* <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" /> */}
               </div>
             </form>
             <DropdownMenu>
@@ -153,8 +154,15 @@ export function Dashboard() {
               <DropdownMenuContent align="end">
                 <DropdownMenuLabel>My Account</DropdownMenuLabel>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem>Settings</DropdownMenuItem>
-                <DropdownMenuItem>Support</DropdownMenuItem>
+                <DropdownMenuItem
+                  onClick={() => {
+                    let id = localStorage.getItem("id");
+                    navigate(`/profile/${id}`);
+                  }}
+                >
+                  profile
+                </DropdownMenuItem>
+
                 <DropdownMenuSeparator />
                 <DropdownMenuItem>Logout</DropdownMenuItem>
               </DropdownMenuContent>

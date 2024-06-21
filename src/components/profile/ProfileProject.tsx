@@ -2,6 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import Card from "../Card";
 import Loading from "../Loading";
 import { useParams } from "react-router-dom";
+import ProfileCard from "../ProfileCard";
 
 function ProfileProject() {
   let { id } = useParams();
@@ -16,13 +17,19 @@ function ProfileProject() {
   return (
     <div>
       <div className="grid grid-cols-2 md:grid-cols-4 ">
-        {query.data?.myproject.myproject.length == 0 && (
-          <h1>You did't create any project yet</h1>
+        {query.data?.error ? (
+          <h1>The user did't create any project yet</h1>
+        ) : (
+          query.data.myproject &&
+          query.data?.myproject.map((each) => {
+            if (localStorage.getItem("id") === id) {
+              return (
+                <ProfileCard className="col-span-1" data={each.projectid} />
+              );
+            }
+            return <Card className="col-span-1" data={each.projectid} />;
+          })
         )}
-        {query.data?.myproject.myproject.map((each) => (
-          <Card className="col-span-1" data={each} />
-        ))}
-        {/* {JSON.stringify(query.data)} */}
       </div>
     </div>
   );

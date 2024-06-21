@@ -15,15 +15,16 @@ function ProfileFavorite() {
   if (query.isLoading) return <Loading />;
   return (
     <div>
-      {query.data?.favourites.favourites.length == 0 && (
-        <h1>You did't add project to your favorite list</h1>
+      {query.data?.error ? (
+        <h1>The user did't add any project to favorite list</h1>
+      ) : (
+        <div className="grid grid-cols-2 md:grid-cols-4 ">
+          {query.data?.favourites &&
+            query.data?.favourites.map((each) => (
+              <Card className="col-span-1" data={each.projectid} />
+            ))}
+        </div>
       )}
-      <div className="grid grid-cols-2 md:grid-cols-4 ">
-        {query.data?.favourites.favourites.map((each) => (
-          <Card className="col-span-1" data={each.projectid} />
-        ))}
-        {/* {JSON.stringify(query.data)} */}
-      </div>
     </div>
   );
 }

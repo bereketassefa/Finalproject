@@ -3,12 +3,9 @@ import {
   Card,
   CardContent,
   CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { useParams } from "react-router-dom";
 import {
   Form,
   FormControl,
@@ -17,28 +14,42 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { useForm } from "react-hook-form";
+import { Input } from "@/components/ui/input";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useMutation } from "@tanstack/react-query";
-import { toast } from "sonner";
-import { z } from "zod";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 import { Loader } from "lucide-react";
+import { useForm } from "react-hook-form";
+import { useParams } from "react-router-dom";
+import { toast } from "sonner";
+import { z } from "zod";
 import { Textarea } from "../ui/textarea";
 
 export default function ProfileSetting() {
   let { id } = useParams();
-
+  const queryClient = useQueryClient();
   const FormSchema = z.object({
-    username: z.string().min(2, {
-      message: "username must be at least 2 characters.",
-    }),
-    password: z.string().min(2, {
-      message: "password must be at least 2 characters.",
-    }),
-    bio: z.string().min(2, {
-      message: "password must be at least 2 characters.",
-    }),
+    username: z
+      .string()
+      .min(2, {
+        message: "username must be at least 2 characters.",
+      })
+      .optional()
+      .or(z.literal("")),
+    password: z
+      .string()
+      .min(2, {
+        message: "password must be at least 2 characters.",
+      })
+      .optional()
+      .or(z.literal("")),
+    bio: z
+      .string()
+      .min(2, {
+        message: "password must be at least 2 characters.",
+      })
+      .optional()
+      .or(z.literal("")),
   });
 
   const form = useForm<z.infer<typeof FormSchema>>({
@@ -51,24 +62,49 @@ export default function ProfileSetting() {
 
   const mutation = useMutation({
     mutationFn: (newTodo: z.infer<typeof FormSchema>) => {
-      return axios.post("http://localhost:3000/api/creator/login", newTodo);
+      return axios.patch(
+        "http://localhost:3000/api/creator/updateaccount",
+        newTodo,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
     },
     onSuccess: (data) => {
-      toast("You have successfully logged in");
+      toast("You have successfully updated your profile");
+
+      queryClient.invalidateQueries({ queryKey: ["profile"] });
+      form.reset();
     },
     onError: () => {
-      toast("Error sending request");
+      // toast("Error sending request");
     },
   });
   const onSubmit = (data: z.infer<typeof FormSchema>) => {
-    // mutation.mutate(data);
     console.log(data);
+    let newdata: any = {};
+    if (data.username != "") {
+      newdata.username = data.username;
+    }
+    if (data.password != "") {
+      newdata.password = data.password;
+    }
+    if (data.bio != "") {
+      newdata.about = data.bio;
+    }
+    if (Object.keys(newdata).length === 0) {
+      toast("Nothing to update");
+    }
+    // console.log(newdata);
+    mutation.mutate(newdata);
   };
   return (
     <Card className="max-w-[800px]">
       <CardHeader>
         <CardTitle>Update profile</CardTitle>
-        <CardDescription>Update the profile</CardDescription>
+        <CardDescription>Update your profile</CardDescription>
       </CardHeader>
       <CardContent>
         <Form {...form}>
@@ -126,7 +162,7 @@ export default function ProfileSetting() {
               {mutation.isPending && (
                 <Loader className="mr-2 h-4 w-4 animate-spin" />
               )}{" "}
-              Login
+              Update
             </Button>
           </form>
         </Form>

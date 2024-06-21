@@ -14,11 +14,18 @@ function SuggesionCard({ data, className }: { data: any; className?: string }) {
           src="https://images.unsplash.com/photo-1661956602116-aa6865609028?ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=764&q=80"
           className="absolute inset-0 h-full w-full object-cover"
         />
+        <img
+          alt=""
+          crossOrigin="anonymous"
+          src={`http://localhost:3000/api/projects/readimage?filename=${data.imagesLink[0]}`}
+          className="absolute inset-0 h-full w-full object-cover"
+        />
 
-        <div className="relative bg-gradient-to-t from-gray-900/50 to-gray-900/25 pt-32 sm:pt-32 lg:pt-32">
+        <div className="relative bg-gradient-to-t from-black to-black/42 pt-32 sm:pt-32 lg:pt-32">
           <div className="p-4 sm:p-6">
             <time dateTime="2022-10-10" className="block text-xs text-white/90">
-              {(data.goal / data.amountReached) * 100}% Funded
+              {/* {Math.trunc((data.goal / data.amountReached) * 100)}% Funded */}
+              {Math.trunc(data.percentfunded)}% Funded
             </time>
 
             <a href="#">

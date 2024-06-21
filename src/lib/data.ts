@@ -1,49 +1,68 @@
 const categories = [
   {
-    name: "Art",
-    link: "#",
-    value: "art",
+    name: "Travel",
+    link: "/searchbytag/travel",
+    value: "travel",
   },
   {
-    name: "Design",
-    link: "#",
-    value: "design",
+    name: "Adventure",
+    link: "/searchbytag/adventure",
+    value: "adventure",
   },
   {
-    name: "Fashion",
-    link: "#",
-    value: "fashion",
+    name: "Politics",
+    link: "/searchbytag/politics",
+    value: "politics",
   },
   {
-    name: "Film",
-    link: "#",
-    value: "fFilm",
-  },
-  {
-    name: "Game",
-    link: "#",
-    value: "game",
-  },
-  {
-    name: "Music",
-    link: "#",
-    value: "music",
-  },
-  {
-    name: "Photography",
-    link: "#",
-    value: "photography",
-  },
-  {
-    name: "Publishing",
-    link: "#",
-    value: "publishing",
+    name: "Show",
+    link: "/searchbytag/show",
+    value: "show",
   },
   {
     name: "Technology",
-    link: "#",
+    link: "/searchbytag/technology",
     value: "technology",
   },
+  {
+    name: "Crafts",
+    link: "/searchbytag/crafts",
+    value: "crafts",
+  },
+  {
+    name: "Food",
+    link: "/searchbytag/food",
+    value: "food",
+  },
+  {
+    name: "Discover",
+    link: "/searchbytag/discover",
+    value: "discover",
+  },
+  {
+    name: "Film",
+    link: "/searchbytag/film",
+    value: "film",
+  },
+  {
+    name: "Theater",
+    link: "/searchbytag/theater",
+    value: "theater",
+  },
+  {
+    name: "Music",
+    link: "/searchbytag/music",
+    value: "music",
+  },
+  {
+    name: "Fashion",
+    link: "/searchbytag/fashion",
+    value: "fashion",
+  },
+  {
+    name: "Design",
+    link: "/searchbytag/design",
+    value: "design",
+  },
 ];
-
 export default categories;

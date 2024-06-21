@@ -48,11 +48,15 @@ function Recommended() {
         <div className=" w-full">
           Featured
           <Link to={`/project/${data.projects[0]._id}`}>
-            <article className="overflow-hidden rounded-lg border border-border pt-4 shadow-sm">
+            <article
+              className="overflow-hidden rounded-lg 
+             border-border pt-4 shadow-sm"
+            >
               <img
                 alt=""
-                src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80"
-                className="h-96 w-full object-cover"
+                crossOrigin="anonymous"
+                src={`http://localhost:3000/api/projects/readimage?filename=${data.projects[0].imagesLink[0]}`}
+                className="h-full w-full object-cover"
               />
 
               <div className="p-4 sm:p-6">
@@ -67,19 +71,6 @@ function Recommended() {
                 <p className="mt-2 line-clamp-3 text-sm/relaxed text-muted-foreground">
                   {data.projects[0].descreptons}
                 </p>
-
-                <a
-                  href="#"
-                  className="group mt-4 inline-flex items-center gap-1 text-sm font-medium text-blue-600"
-                >
-                  Find out more
-                  <span
-                    aria-hidden="true"
-                    className="block transition-all group-hover:ms-0.5 rtl:rotate-180"
-                  >
-                    &rarr;
-                  </span>
-                </a>
               </div>
             </article>
           </Link>
@@ -89,7 +80,7 @@ function Recommended() {
           <div className="grid  md:grid-cols-2 gap-3 pt-2">
             {data.projects.map((each, index) => {
               if (index === 0) return;
-              return <SuggesionCard data={each} />;
+              return <SuggesionCard data={each} key={index} />;
             })}
             {/* <SuggesionCard className="w-full" />
             <SuggesionCard className="w-full" />

@@ -10,10 +10,8 @@ export default function RewardCard(reward: any) {
             <div className="flex-shrink-0" />
             <div className="grid gap-1.5">
               <div className="flex items-center gap-2 text-sm">
-                <div className="font-medium">shadcn</div>
-                <div className="text-secondary-variant-600 dark:text-secondary-variant-500">
-                  3m
-                </div>
+                <div className="font-medium"></div>
+                <div className="text-secondary-variant-600 dark:text-secondary-variant-500"></div>
               </div>
               <div className="prose-sm max-w-none w-full line-clamp-10">
                 {each}

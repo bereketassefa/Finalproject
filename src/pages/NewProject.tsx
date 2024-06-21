@@ -38,9 +38,11 @@ import { Calendar } from "@/components/ui/calendar";
 import { useMutation } from "@tanstack/react-query";
 import { toast } from "sonner";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 function NewProject() {
   const [imageFiles, setImageFiles] = useState();
+  const navigate = useNavigate();
   const formSchema = z.object({
     name: z.string().min(2).max(50),
     category: z
@@ -95,6 +97,7 @@ function NewProject() {
     },
     onSuccess: () => {
       toast("You have succesfully created a project");
+      navigate(`/profile/${localStorage.getItem("id")}`);
     },
   });
   function onSubmit(values: z.infer<typeof formSchema>) {
@@ -105,18 +108,18 @@ function NewProject() {
       })
       .then((data) => {
         setImageFiles(data.filenames);
-        console.log(data.filenames);
+        console.log(imageFiles);
         const project = {
           title: values.name,
           descreptons: values.descriptions,
           catagory: [values.category, values.secondcategory],
           goal: values.goal,
           deadline: values.deadline,
-          imagesLink: imageFiles,
+          imagesLink: data.filenames,
           // imagesLink: ["coverimage_1712652282051.png"],
           creator: {
             username: localStorage.getItem("name"),
-            userid: localStorage.getItem("token"),
+            userid: localStorage.getItem("id"),
           },
         };
         mutation.mutate(project);
@@ -137,6 +140,9 @@ function NewProject() {
     return fetch("http://localhost:3000/api/projects/uploadimages", {
       method: "POST",
       body: formData,
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
     });
   };
   return (
@@ -153,11 +159,9 @@ function NewProject() {
                   <FormItem>
                     <FormLabel>Name of the project</FormLabel>
                     <FormControl>
-                      <Input placeholder="shadcn" {...field} />
+                      <Input placeholder="project name" {...field} />
                     </FormControl>
-                    <FormDescription>
-                      This is your public display name.
-                    </FormDescription>
+                    <FormDescription>project name</FormDescription>
                     <FormMessage />
                   </FormItem>
                 )}
@@ -174,7 +178,7 @@ function NewProject() {
                     >
                       <FormControl>
                         <SelectTrigger>
-                          <SelectValue placeholder="Select a verified email to display" />
+                          <SelectValue placeholder="Select a category" />
                         </SelectTrigger>
                       </FormControl>
                       <SelectContent>
@@ -202,7 +206,7 @@ function NewProject() {
                     >
                       <FormControl>
                         <SelectTrigger>
-                          <SelectValue placeholder="Select a verified email to display" />
+                          <SelectValue placeholder="Select a second category" />
                         </SelectTrigger>
                       </FormControl>
                       <SelectContent>
@@ -231,7 +235,7 @@ function NewProject() {
                       />
                     </FormControl>
                     <FormDescription>
-                      This is your public display name.
+                      Write a description for your project
                     </FormDescription>
                     <FormMessage />
                   </FormItem>
@@ -310,7 +314,7 @@ function NewProject() {
                 name="deadline"
                 render={({ field }) => (
                   <FormItem className="flex flex-col">
-                    <FormLabel>Date of birth</FormLabel>
+                    <FormLabel>Campaign ending</FormLabel>
                     <Popover>
                       <PopoverTrigger asChild>
                         <FormControl>
@@ -341,7 +345,7 @@ function NewProject() {
                       </PopoverContent>
                     </Popover>
                     <FormDescription>
-                      Your date of birth is used to calculate your age.
+                      Select the campaign ending
                     </FormDescription>
                     <FormMessage />
                   </FormItem>

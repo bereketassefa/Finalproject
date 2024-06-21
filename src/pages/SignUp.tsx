@@ -20,20 +20,20 @@ import ReactSelect, { GroupBase, OptionsOrGroups } from "react-select";
 import { cn } from "@/lib/utils";
 
 const FormSchema = z.object({
-  email: z.string().min(2, {
+  username: z.string().min(2, {
     message: "Username must be at least 2 characters.",
   }),
   password: z.string().min(2, {
     message: "password must be at least 2 characters.",
   }),
-  interest: z
-    .array(
-      z.object({
-        value: z.string(),
-        label: z.string(),
-      })
-    )
-    .optional(),
+  // interest: z
+  //   .array(
+  //     z.object({
+  //       value: z.string(),
+  //       label: z.string(),
+  //     })
+  //   )
+  //   .optional(),
   email: z
     .string()
     .min(2, {
@@ -68,7 +68,7 @@ export function Signup() {
   const onSubmit = (data: z.infer<typeof FormSchema>) => {
     console.log(data);
     // data.
-    // mutation.mutate(data);
+    mutation.mutate(data);
   };
   const options = [
     { value: "chocolate", label: "Chocolate" },
@@ -151,7 +151,7 @@ export function Signup() {
                 name="password"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Username</FormLabel>
+                    <FormLabel>Password</FormLabel>
                     <FormControl>
                       <Input
                         type="password"
@@ -166,7 +166,7 @@ export function Signup() {
                   </FormItem>
                 )}
               />
-              <FormField
+              {/* <FormField
                 control={form.control}
                 name={"interest"}
                 render={({ field }) => (
@@ -210,12 +210,12 @@ export function Signup() {
                     <FormMessage />
                   </FormItem>
                 )}
-              />
+              /> */}
               <Button type="submit" disabled={mutation.isPending}>
                 {mutation.isPending && (
                   <Loader className="mr-2 h-4 w-4 animate-spin" />
                 )}{" "}
-                Login
+                Signup
               </Button>
             </form>
           </Form>
@@ -230,11 +230,12 @@ export function Signup() {
       </div>
       <div className="hidden bg-muted lg:block">
         <img
-          src="https://images.unsplash.com/photo-1580489944761-15a19d654956?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1374&q=80"
+          src="/login.jpg "
           alt="Image"
           width="1920"
           // height="100vh"
-          className="h-screen w-full object-cover dark:brightness-[0.2] dark:grayscale"
+          className="h-screen w-full object-cover dark:brightness-[1] dark:grayscale"
+          // className="h-screen w-full object-cover dark:brightness-[1] dark:grayscale"
         />
       </div>
     </div>

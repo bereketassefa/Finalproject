@@ -25,7 +25,6 @@ const FormSchema = z.object({
     message: "password must be at least 2 characters.",
   }),
 });
-
 export function Login() {
   const navigate = useNavigate();
   const form = useForm<z.infer<typeof FormSchema>>({
@@ -80,9 +79,6 @@ export function Login() {
                       <FormControl>
                         <Input placeholder="username" {...field} />
                       </FormControl>
-                      {/* <FormDescription>
-                        This is your public display name.
-                      </FormDescription> */}
                       <FormMessage />
                     </FormItem>
                   )}
@@ -100,9 +96,6 @@ export function Login() {
                           {...field}
                         />
                       </FormControl>
-                      {/* <FormDescription>
-                        This is your public display name.
-                      </FormDescription> */}
                       <FormMessage />
                     </FormItem>
                   )}
@@ -126,11 +119,12 @@ export function Login() {
       </div>
       <div className="hidden bg-muted lg:block">
         <img
-          src="https://images.unsplash.com/photo-1580489944761-15a19d654956?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1374&q=80"
+          src="/login.jpg "
           alt="Image"
           width="1920"
           // height="100vh"
-          className="h-screen w-full object-cover dark:brightness-[0.2] dark:grayscale"
+          className="h-screen w-full object-cover dark:brightness-[1] dark:grayscale"
+          // className="h-screen w-full object-cover dark:brightness-[1] dark:grayscale"
         />
       </div>
     </div>

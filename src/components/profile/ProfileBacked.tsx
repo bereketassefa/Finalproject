@@ -15,16 +15,12 @@ function ProfileBacked() {
   if (query.isLoading) return <Loading />;
   return (
     <div>
-      {query.data?.backedproject.backedproject.length == 0 && (
-        <h1>You did't back any project yet</h1>
-      )}
+      {query.data?.error && <h1>You did't back any project yet</h1>}
       <div className="grid grid-cols-2 md:grid-cols-4 ">
-        {query.data?.backedproject.backedproject.map((each) => (
-          <Card className="col-span-1" data={each} />
-        ))}
-        {/* <Card className="col-span-1" />
-        <Card className="col-span-1" />
-        <Card className="col-span-1" /> */}
+        {query.data.backedproject &&
+          query.data?.backedproject.map((each) => (
+            <Card className="col-span-1" data={each.projectid} />
+          ))}
       </div>
     </div>
   );

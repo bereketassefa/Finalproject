@@ -34,8 +34,8 @@ export default function CTA() {
                 Grow together
               </h2>
               <p className="mt-6 text-lg leading-8 text-gray-300">
-                Ac euismod vel sit maecenas id pellentesque eu sed consectetur.
-                Malesuada adipiscing sagittis vel nulla.
+                Empower creators, unite backers, fuel innovation, democratize
+                funding, celebrate dreams.
               </p>
               <div className="mt-10 flex items-center justify-center gap-x-6 lg:justify-start">
                 <Button asChild>

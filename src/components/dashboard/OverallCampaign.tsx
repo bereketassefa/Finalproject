@@ -1,22 +1,18 @@
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
-import { Activity, CreditCard, DollarSign, Users } from "lucide-react";
+import { CreditCard, DollarSign, Users } from "lucide-react";
 import Loading from "../Loading";
+import { useParams } from "react-router-dom";
 
 function OverallCampaign() {
+  let { id } = useParams();
   const { data, isLoading } = useQuery<any>({
     queryKey: ["Single project metrics"],
     queryFn: () =>
       axios
         .get(
-          "http://localhost:3000/api/projects/singleprojectmetrics?projectid=6612653c2bad6bd1025efe22"
+          `http://localhost:3000/api/projects/singleprojectmetrics?projectid=${id}`
         )
         .then((data) => data.data),
   });
@@ -31,36 +27,42 @@ function OverallCampaign() {
           <DollarSign className="h-4 w-4 text-muted-foreground" />
         </CardHeader>
         <CardContent>
-          <div className="text-2xl font-bold">{data.singlestats[0].donors}</div>
+          <div className="text-2xl font-bold">
+            {data.singlestats.length ? data.singlestats[0]?.donors : "0"}
+          </div>
           <p className="text-xs text-muted-foreground">
-            +20.1% from last month
+            {/* +20.1% from last month */}
           </p>
         </CardContent>
       </Card>
       <Card>
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-          <CardTitle className="text-sm font-medium">Subscriptions</CardTitle>
+          <CardTitle className="text-sm font-medium">
+            Average Donation
+          </CardTitle>
           <Users className="h-4 w-4 text-muted-foreground" />
         </CardHeader>
         <CardContent>
           <div className="text-2xl font-bold">
-            {data.singlestats[0].averageDonationAmount}
+            {data.singlestats.length
+              ? data.singlestats[0]?.averageDonationAmount
+              : "0"}
           </div>
           <p className="text-xs text-muted-foreground">
-            +180.1% from last month
+            {/* +180.1% from last month */}
           </p>
         </CardContent>
       </Card>
       <Card>
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-          <CardTitle className="text-sm font-medium">Sales</CardTitle>
+          <CardTitle className="text-sm font-medium">Total Funds</CardTitle>
           <CreditCard className="h-4 w-4 text-muted-foreground" />
         </CardHeader>
         <CardContent>
           <div className="text-2xl font-bold">
-            {data.singlestats[0].totalFunds}
+            {data.singlestats.length ? data.singlestats[0]?.totalFunds : "0"}
           </div>
-          <p className="text-xs text-muted-foreground">+19% from last month</p>
+          {/* <p className="text-xs text-muted-foreground">+19% from last month</p> */}
         </CardContent>
       </Card>
       {/* <Card>

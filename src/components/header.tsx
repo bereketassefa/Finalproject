@@ -1,6 +1,6 @@
 import { Button } from "./ui/button";
 import { Link, useNavigate } from "react-router-dom";
-import { CircleUser, HandCoins, Menu, Package2 } from "lucide-react";
+import { CircleUser, HandCoins, Menu, Package2, Search } from "lucide-react";
 import { ModeToggle } from "./mode-toggle";
 import {
   Sheet,
@@ -35,7 +35,7 @@ function Header() {
     },
     {
       name: "Profile",
-      link: "/profile/66150dffbadbcfe68b11d2db",
+      link: "/profile/66157c4b76797ee3a59db45b",
     },
     {
       name: "Trial",
@@ -70,7 +70,7 @@ function Header() {
             <div className="hidden md:block">
               <nav aria-label="Global">
                 <ul className="flex items-center gap-6 text-sm">
-                  {links.map((each, index) => {
+                  {/* {links.map((each, index) => {
                     return (
                       <li key={index}>
                         <Button variant={"ghost"}>
@@ -78,13 +78,18 @@ function Header() {
                         </Button>
                       </li>
                     );
-                  })}
+                  })} */}
                 </ul>
               </nav>
             </div>
 
             <div className="flex items-center gap-4">
               <div className="sm:flex sm:gap-4">
+                <Button variant={"outline"}>
+                  <Link to="/search">
+                    <Search />
+                  </Link>
+                </Button>
                 <ModeToggle />
                 <Button variant={"outline"} asChild>
                   <Link to="/new">Start a project</Link>
@@ -114,7 +119,7 @@ function Header() {
                         >
                           profile
                         </DropdownMenuItem>
-                        <DropdownMenuItem>Support</DropdownMenuItem>
+
                         <DropdownMenuSeparator />
                         <DropdownMenuItem
                           onClick={() => {
@@ -146,15 +151,9 @@ function Header() {
                     </Button>
                   </SheetTrigger>
                   <SheetContent>
-                    <SheetHeader>
-                      {/* <SheetTitle>Edit profile</SheetTitle>
-                    <SheetDescription>
-                      Make changes to your profile here. Click save when you're
-                      done.
-                    </SheetDescription> */}
-                    </SheetHeader>
+                    <SheetHeader></SheetHeader>
                     <nav aria-label="Global">
-                      <ul className="flex flex-col items-center gap-6 text-sm">
+                      {/* <ul className="flex flex-col items-center gap-6 text-sm">
                         {links.map((each, index) => {
                           return (
                             <li>
@@ -164,7 +163,7 @@ function Header() {
                             </li>
                           );
                         })}
-                      </ul>
+                      </ul> */}
                     </nav>
                     <SheetFooter>
                       <SheetClose asChild></SheetClose>

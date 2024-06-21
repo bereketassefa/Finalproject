@@ -25,6 +25,11 @@ import SearchResult from "./pages/SearchResult.tsx";
 import { Signup } from "./pages/SignUp.tsx";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import ProfileSetting from "./components/profile/ProfileSetting.tsx";
+import Follower from "./components/Follower.tsx";
+import Following from "./components/Following.tsx";
+import Success from "./components/Success.tsx";
+import Failed from "./components/Failed.tsx";
+import SearchByTag from "./pages/SearchByTag.tsx";
 
 const queryClient = new QueryClient();
 const router = createBrowserRouter([
@@ -37,17 +42,17 @@ const router = createBrowserRouter([
     ),
   },
   {
-    path: "/dash",
+    path: "/dash/:id",
     element: <Dashboard />,
     children: [
       {
-        path: "/dash",
+        path: "/dash/:id",
         element: <Campaign />,
       },
-      {
-        path: "/dash/manage",
-        element: <Manage />,
-      },
+      // {
+      //   path: "/dash/:id/manage",
+      //   element: <Manage />,
+      // },
     ],
   },
   {
@@ -87,6 +92,14 @@ const router = createBrowserRouter([
         path: "/profile/:id/setting",
         element: <ProfileSetting />,
       },
+      {
+        path: "/profile/:id/follower",
+        element: <Follower />,
+      },
+      {
+        path: "/profile/:id/following",
+        element: <Following />,
+      },
     ],
   },
   {
@@ -118,6 +131,22 @@ const router = createBrowserRouter([
     element: (
       <Layout>
         <NewProject />
+      </Layout>
+    ),
+  },
+  {
+    path: "/payment/success",
+    element: <Success />,
+  },
+  {
+    path: "/payment/failed",
+    element: <Failed />,
+  },
+  {
+    path: "/searchbytag/:tag",
+    element: (
+      <Layout>
+        <SearchByTag />
       </Layout>
     ),
   },

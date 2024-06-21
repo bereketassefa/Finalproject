@@ -1,8 +1,8 @@
 import { Link } from "react-router-dom";
 
-function Card({ data, className }: { data: any; className?: string }) {
+function ProfileCard({ data, className }: { data: any; className?: string }) {
   return (
-    <Link to={`/project/${data?._id}`}>
+    <Link to={`/dash/${data?._id}`}>
       <div className={"p-1 " + className}>
         <article className="overflow-hidden rounded-lg shadow transition ">
           <img
@@ -14,8 +14,8 @@ function Card({ data, className }: { data: any; className?: string }) {
 
           <div className=" p-4 sm:p-6">
             <p className="block text-xs text-muted-foreground">
+              {/* {Math.trunc((data?.goal / data.amountReached) * 100)}% Funded */}
               {Math.trunc(data?.percentfunded)}% Funded
-              {/* {Math.trunc((data?.goal / data?.amountReached) * 100)}% Funded */}
             </p>
 
             <a>
@@ -34,4 +34,4 @@ function Card({ data, className }: { data: any; className?: string }) {
   );
 }
 
-export default Card;
+export default ProfileCard;

@@ -1,12 +1,15 @@
 import Loading from "@/components/Loading";
 import Maxwidth from "@/components/Maxwidth";
 import { Button } from "@/components/ui/button";
+import { Label } from "@/components/ui/label";
+import { Switch } from "@/components/ui/switch";
 import { ChevronRightIcon } from "@heroicons/react/24/solid";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 import { HashIcon, Loader } from "lucide-react";
+import { useEffect } from "react";
 
-import { NavLink, Outlet, useParams } from "react-router-dom";
+import { NavLink, Outlet, useLocation, useParams } from "react-router-dom";
 import { toast } from "sonner";
 
 function classNames(...classes: any) {
@@ -16,6 +19,7 @@ function classNames(...classes: any) {
 type profileSchema = {
   _id: string;
   username: string;
+  visibility: string;
   about: string;
   myproject: {
     _id: string;
@@ -40,24 +44,78 @@ type profileSchema = {
 export default function Profile() {
   let { id } = useParams();
 
-  const { data, isLoading } = useQuery<{ creator: profileSchema } | null>({
+  const queryClient = useQueryClient();
+  useEffect(() => {
+    console.log("what is up");
+    queryClient.invalidateQueries({ queryKey: ["profile"] });
+  }, [useLocation().pathname]);
+
+  const { data, isLoading } = useQuery<{
+    creator: profileSchema;
+    isalreadyFollowedCreator: boolean;
+  } | null>({
     queryKey: ["profile"],
     queryFn: () =>
       axios
-        .get(`http://localhost:3000/api/creator/?creatorid=${id}`)
+        .get(
+          `http://localhost:3000/api/creator/?creatorid=${id}&followerid=${localStorage.getItem(
+            "id"
+          )}`
+        )
         .then((data) => data.data),
   });
   const sendFollow = useMutation({
     mutationFn: () => {
       return axios
-        .post(`http://localhost:3000/api/follow`, {
-          followerid: localStorage.getItem("id"),
-          followedid: id,
-        })
+        .post(
+          `http://localhost:3000/api/follow`,
+          {
+            followerid: localStorage.getItem("id"),
+            followedid: id,
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("token")}`,
+            },
+          }
+        )
         .then((data) => data.data);
     },
     onSuccess: () => {
-      toast("You followed the creator");
+      queryClient.invalidateQueries({ queryKey: ["profile"] });
+
+      if (data?.isalreadyFollowedCreator) {
+        toast.success("You have succesfully unfollowed the creator");
+      }
+      if (!data?.isalreadyFollowedCreator) {
+        toast.success("You have succesfully followed the creator");
+      }
+    },
+  });
+
+  const changeVisibiltiy = useMutation({
+    mutationFn: () => {
+      return axios
+        .patch(
+          `http://localhost:3000/api/creator/visibility`,
+          {},
+          {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("token")}`,
+            },
+          }
+        )
+        .then((data) => data.data);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["profile"] });
+
+      if (data?.creator.visibility == "private") {
+        toast.success("You profile is now public");
+      }
+      if (!(data?.creator.visibility == "private")) {
+        toast.success("Your profile is private now ");
+      }
     },
   });
 
@@ -74,9 +132,11 @@ export default function Profile() {
   }
 
   const tabs = [
-    { name: "Created", href: `/profile/${id}/`, current: true },
+    { name: "Created", href: `/profile/${id}`, current: true },
     { name: "Backed", href: `/profile/${id}/backed`, current: false },
     { name: "Favorite", href: `/profile/${id}/favorite`, current: false },
+    // { name: "Followers", href: `/profile/${id}/follower`, current: false },
+    // { name: "Following", href: `/profile/${id}/following`, current: false },
     { name: "Setting", href: `/profile/${id}/setting`, current: false },
   ];
   return (
@@ -131,18 +191,32 @@ export default function Profile() {
                   })}
                 </div>
               </div>
+              {localStorage.getItem("id") == id && (
+                <div className="flex items-center space-x-2 pt-4 lg:pt-0">
+                  <Switch
+                    id="airplane-mode"
+                    checked={
+                      data?.creator?.visibility == "public" ? true : false
+                    }
+                    onCheckedChange={() => {
+                      changeVisibiltiy.mutate();
+                    }}
+                  />
+                  <Label htmlFor="airplane-mode">visibility</Label>
+                </div>
+              )}
               <div className="mt-5 flex xl:mt-0 xl:ml-4">
-                {localStorage.getItem("token") ? (
+                {localStorage.getItem("id") == id ? (
+                  ""
+                ) : (
                   <span className="">
                     <Button onClick={() => followUser()}>
                       {sendFollow.isPending && (
                         <Loader className="mr-2 h-4 w-4 animate-spin" />
                       )}
-                      Follow
+                      {data?.isalreadyFollowedCreator ? "Unfollow" : "Follow"}
                     </Button>
                   </span>
-                ) : (
-                  ""
                 )}
               </div>
             </div>
@@ -158,31 +232,44 @@ export default function Profile() {
                       className="mt-2 -mb-px flex space-x-8"
                       aria-label="Tabs"
                     >
-                      {tabs.map((tab) => (
-                        <NavLink
-                          end
-                          key={tab.name}
-                          to={tab.href}
-                          className={(isActive) => {
-                            return classNames(
-                              isActive.isActive
-                                ? "border-primary text-primary"
-                                : "border-transparent text-muted-foreground  ",
-                              "whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm"
-                            );
-                          }}
-                        >
-                          {tab.name}
-                          {/* {tab.count ? (
-                            <Badge className="ml-2">{tab.count}</Badge>
-                          ) : null} */}
-                        </NavLink>
-                      ))}
+                      {tabs.map((tab) => {
+                        if (
+                          (tab.name == "Setting" &&
+                            id !== localStorage.getItem("id")) ||
+                          localStorage.getItem("id") == null
+                        ) {
+                          return "";
+                        }
+                        return (
+                          <NavLink
+                            end
+                            key={tab.name}
+                            to={tab.href}
+                            className={(isActive) => {
+                              return classNames(
+                                isActive.isActive
+                                  ? "border-primary text-primary"
+                                  : "border-transparent text-muted-foreground  ",
+                                "whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm"
+                              );
+                            }}
+                          >
+                            {tab.name}
+                          </NavLink>
+                        );
+                      })}
                     </nav>
                   </div>
                 </div>
               </div>
-              <Outlet />
+              {/* {JSON.stringify(data?.creator.visibility)} */}
+              {data?.creator?.visibility == "public" ? (
+                <Outlet />
+              ) : localStorage.getItem("id") == id ? (
+                <Outlet />
+              ) : (
+                <div>User profile is private</div>
+              )}
             </div>
           </main>
         </Maxwidth>
